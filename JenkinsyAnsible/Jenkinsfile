@@ -5,6 +5,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 script {
+                    dir('Terraform') {
                     sh 'terraform init'  // Esto ejecutará terraform en la máquina real
                 }
             }
