@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-server
+    environment:
+      - DOCKER_HOST=tcp://host.docker.internal:2375  # Conexión Docker Desktop (Windows)
+      - TERRAFORM_PATH=/usr/local/bin/terraform # Ruta de Terraform en la máquina local
+    ports:
+      - "8080:8080"  # Puerto web de Jenkins
+      - "50000:50000"  # Puerto para conectar agentes de Jenkins
+    volumes:
+      - jenkins_home:/var/jenkins_home  # Persistencia de datos de Jenkins
+      - /var/run/docker.sock:/var/run/docker.sock  # Permitir acceso a Docker desde Jenkins
+      - ../Terraform:/terraform  # Mapeo del directorio local de Terraform a Jenkins
+    privileged: true  # Permitir permisos de Docker completos
+    networks:
+      - jenkins_network
+
+  ansible:
+    image: williamyeh/ansible:alpine3  # Imagen de Ansible (en Alpine)
+    container_name: ansible-container
+    volumes:
+      - ./ansible:/ansible  # Mapeo de directorio local con playbooks
+      - /var/run/docker.sock:/var/run/docker.sock  # Acceso a Docker desde Ansible
+    networks:
+      - jenkins_network
+    command: tail -f /dev/null  # Mantener contenedor en ejecución
+
+volumes:
+  jenkins_home:
+
+networks:
+  jenkins_network:
+    driver: bridge
