@@ -14,11 +14,11 @@ pipeline {
                 script {
                     // Construir y probar la imagen de Docker para asegurar que funcione
                     echo 'Construyendo la imagen de Docker para pruebas...'
-                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                    sh 'docker build -t ${DOCKER_IMAGE}${IMAGE_VERSION} .'
                     
                     // Ejecutar pruebas básicas en el contenedor Docker
                     echo 'Ejecutando contenedor para pruebas...'
-                    sh 'docker run --rm ${DOCKER_IMAGE} echo "¡El contenedor está funcionando!"'
+                    sh 'docker run --rm ${DOCKER_IMAGE}${IMAGE_VERSION} echo "¡El contenedor está funcionando!"'
                 }
             }
         }
