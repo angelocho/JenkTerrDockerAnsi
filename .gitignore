@@ -12,8 +12,7 @@
 # Ignorar archivos de Terraform
 Terraform/.terraform/*
 Terraform/.terraform/
-Terraform/*.tfstate
-Terraform/*.tfstate.*
+Terraform/terraform.tfstate.*
 Terraform/.terraform.lock.hcl
 
 # Ignorar configuraciones de Jenkins
