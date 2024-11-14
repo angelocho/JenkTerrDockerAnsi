@@ -34,7 +34,7 @@ pipeline {
                         sh "terraform plan -var='docker_image_name=${DOCKER_IMAGE}' -out=tfplan"
 
                         echo 'Aplicando el despliegue de Terraform...'
-                        sh "terraform apply -var='docker_image_name=${DOCKER_IMAGE}' -auto-approve tfplan"
+                        sh "terraform apply -auto-approve tfplan"
                     }
                 }
             }
