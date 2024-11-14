@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "angelocho/ubuntu-serversshjenkis"
+        DOCKER_IMAGE = "angelocho/ubuntu-serversshjenkins"
+        IMAGE_VERSION = "v1"
         TERRAFORM_DIR = "./Terraform"
         ANSIBLE_PLAYBOOK_DIR = "./Ansible"
     }
@@ -31,7 +32,7 @@ pipeline {
                         sh 'terraform init'
 
                         echo 'Planificando el despliegue de Terraform...'
-                        sh "terraform plan -var='docker_image_name=${DOCKER_IMAGE}' -out=tfplan"
+                        sh "terraform plan -var='docker_image_name=${DOCKER_IMAGE},docker_image_version=${IMAGE_VERSION}' -out=tfplan"
 
                         echo 'Aplicando el despliegue de Terraform...'
                         sh "terraform apply -auto-approve tfplan"
