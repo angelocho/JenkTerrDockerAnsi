@@ -37,11 +37,11 @@ pipeline {
 
                         echo 'Planificando el despliegue de Terraform...'            
                         sh """
-                    terraform plan \
-                      -var="docker_image_name=${DOCKER_IMAGE}" \
-                      -var="docker_image_version=${IMAGE_VERSION}" \ 
-                      -var="docker_container_name=ubuntu-ssh-python3.11.${NUMBEROFBUILD}" -out=tfplan
-                    """
+                    terraform plan -var="docker_image_name=${DOCKER_IMAGE}" \
+                                   -var="docker_image_version=${IMAGE_VERSION}" \
+                                   -var="docker_container_name=ubuntu-ssh-python3.11.${NUMBEROFBUILD}" \
+                                   -out=tfplan
+                           """
 
                         echo 'Aplicando el despliegue de Terraform...'
                         sh "terraform apply -auto-approve tfplan"
