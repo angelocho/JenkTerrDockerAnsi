@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "angelocho/ubuntu-serversshjenkins"
-        IMAGE_VERSION = "v1"
+        IMAGE_VERSION = ":v1"
         TERRAFORM_DIR = "./Terraform"
         ANSIBLE_PLAYBOOK_DIR = "./Ansible"
     }
