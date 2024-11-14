@@ -28,6 +28,16 @@ services:
       - jenkins_network
     command: tail -f /dev/null  # Mantener contenedor en ejecución
 
+  terraform:
+    image: hashicorp/terraform:latest  # Imagen oficial de Terraform
+    container_name: terraform-container
+    volumes:
+      - ../Terraform:/terraform  # Mapeo de la carpeta local de Terraform al contenedor
+      - /var/run/docker.sock:/var/run/docker.sock  # Permite a Terraform acceder al Docker del host
+    networks:
+      - jenkins_network
+    command: tail -f /dev/null  # Mantener el contenedor en ejecución
+
 volumes:
   jenkins_home:
 
