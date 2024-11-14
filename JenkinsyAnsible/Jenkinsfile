@@ -5,7 +5,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 script {
-                    sh 'docker exec terraform-container terraform init'  // Esto ejecutará terraform en la máquina real
+                    sh 'terraform init'  // Esto ejecutará terraform en la máquina real
                 }
             }
         }
@@ -13,7 +13,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
-                    sh 'docker exec terraform-container terraform plan'  // Ejecutar terraform plan
+                    sh 'terraform plan'  // Ejecutar terraform plan
                 }
             }
         }
