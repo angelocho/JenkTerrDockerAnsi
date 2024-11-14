@@ -6,17 +6,11 @@ pipeline {
     }
 
     stages {
-        stage('Clone Terraform Repository') {
-            steps {
-                // Clona el repositorio que contiene los archivos de Terraform
-                git 'https://github.com/mi-repositorio/terraform.git'  // Reemplaza con el repositorio de Terraform
-            }
-        }
         stage('Run Terraform Init') {
             steps {
                 script {
                     // Ejecuta terraform init en la máquina local
-                    sh 'terraform init /terraform'  // El directorio de trabajo con los archivos .tf
+                    sh 'terraform init ./Terraform'  // El directorio de trabajo con los archivos .tf
                 }
             }
         }
@@ -24,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Ejecuta terraform plan en la máquina local
-                    sh 'terraform plan /terraform'
+                    sh 'terraform plan ./Terraform'
                 }
             }
         }
@@ -32,7 +26,7 @@ pipeline {
             steps {
                 script {
                     // Ejecuta terraform apply en la máquina local
-                    sh 'terraform apply -auto-approve /terraform'
+                    sh 'terraform apply -auto-approve ./terraform'
                 }
             }
         }
