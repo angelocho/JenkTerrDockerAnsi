@@ -1,0 +1,8 @@
+---
+- name: Verificar conectividad con los hosts
+  hosts: ubuntu
+  gather_facts: false
+
+  tasks:
+    - name: Enviar ping al host remoto
+      ansible.builtin.ping:
