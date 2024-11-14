@@ -15,7 +15,9 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
+                    dir('Terraform') {
                     sh 'terraform plan'  // Ejecutar terraform plan
+                    }
                 }
             }
         }
