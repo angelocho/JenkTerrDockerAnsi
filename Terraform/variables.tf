@@ -19,3 +19,7 @@ variable "docker_image_version" {
   type = string
   default = ":v1"
 }
+variable "docker_container_name" {
+  type = string
+  default = "ubuntu-ssh-python3.11"
+}

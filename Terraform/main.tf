@@ -16,7 +16,7 @@ resource "docker_image" "angelocho" {
 
 resource "docker_container" "angelocho_container" {
   image = docker_image.angelocho.image_id
-  name  = "ubuntu-ssh-python3.11"
+  name  = var.docker_container_name
   dynamic "ports" {
     for_each = var.docker_ports
     content {
