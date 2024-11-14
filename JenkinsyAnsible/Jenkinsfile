@@ -7,6 +7,7 @@ pipeline {
                 script {
                     dir('Terraform') {
                     sh 'terraform init'  // Esto ejecutará terraform en la máquina real
+                   }
                 }
             }
         }
