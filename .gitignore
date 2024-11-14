@@ -1,10 +1,20 @@
+# No ignorar los archivos de Terraform (mantener main.tf y otros archivos)
+!Terraform/*
+# No ignorar los archivos de Docker en la raíz y subdirectorios
+!Dockerfile
+!docker-compose.yml
+!docker-compose.override.yml
+!docker-compose.override.yaml
+
+# No ignorar el Dockerfile dentro de JenkinsyAnsible
+!JenkinsyAnsible/docker-compose.yaml
+
 # Ignorar archivos de Terraform
 Terraform/.terraform/*
 Terraform/.terraform/
 Terraform/*.tfstate
 Terraform/*.tfstate.*
-Terraform/*.tfvars
-Terraform/\.terraform.lock.hcl
+Terraform/.terraform.lock.hcl
 
 # Ignorar configuraciones de Jenkins
 JenkinsyAnsible/jenkins_home/
@@ -49,15 +59,3 @@ dist/
 
 # Ignorar archivos de configuración específicos de Visual Studio Code
 .vscode/
-
-# No ignorar los archivos de Docker en la raíz y subdirectorios
-!Dockerfile
-!docker-compose.yml
-!docker-compose.override.yml
-!docker-compose.override.yaml
-
-# No ignorar el Dockerfile dentro de JenkinsyAnsible
-!JenkinsyAnsible/Dockerfile
-
-# No ignorar los archivos de Terraform (mantener main.tf y otros archivos)
-!Terraform/*
