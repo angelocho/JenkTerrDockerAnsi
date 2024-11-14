@@ -31,8 +31,15 @@ pipeline {
                         echo 'Inicializando Terraform...'
                         sh 'terraform init'
 
-                        echo 'Planificando el despliegue de Terraform...'
-                        sh "terraform plan -var='docker_image_name=${DOCKER_IMAGE},docker_image_version=${IMAGE_VERSION}' -out=tfplan"
+                        echo 'Formateando TF'
+                        sh 'terraform fmt'
+
+                        echo 'Planificando el despliegue de Terraform...'            
+                        sh """
+                    terraform plan \
+                      -var="docker_image_name=${DOCKER_IMAGE}" \
+                      -var="docker_image_version=${IMAGE_VERSION}"
+                    """
 
                         echo 'Aplicando el despliegue de Terraform...'
                         sh "terraform apply -auto-approve tfplan"
