@@ -1,0 +1,62 @@
+# Ignorar archivos de Terraform
+Terraform/.terraform/
+Terraform/*.tfstate
+Terraform/*.tfstate.*
+Terraform/*.tfvars
+Terraform/.terraform.lock.hcl
+
+# Ignorar configuraciones de Jenkins
+JenkinsyAnsible/jenkins_home/
+
+# Ignorar archivos generados de logs
+*.log
+
+# Archivos de salida y compilados
+*.out
+*.bak
+*.swp
+*.swo
+
+# Ignorar archivos secretos y claves
+*.pem
+*.key
+*.crt
+*.env
+
+# Ignorar configuraciones de sistemas operativos
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Archivos de configuración específicos de IDE
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Ignorar archivos de compilación generados
+build/
+dist/
+
+# Ignorar otros archivos de configuración local
+*.private
+*.key
+*.pem
+
+# Ignorar archivos de configuración específicos de Visual Studio Code
+.vscode/
+
+# No ignorar los archivos de Docker en la raíz y subdirectorios
+!Dockerfile
+!docker-compose.yml
+!docker-compose.override.yml
+!docker-compose.override.yaml
+
+# No ignorar el Dockerfile dentro de JenkinsyAnsible
+!JenkinsyAnsible/Dockerfile
+
+# No ignorar los archivos de Terraform (mantener main.tf y otros archivos)
+!Terraform/*
