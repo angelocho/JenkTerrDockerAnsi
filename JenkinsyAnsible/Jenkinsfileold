@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Terraform Init') {
+            steps {
+                script {
+                    dir('Terraform') {
+                    sh 'terraform init'  // Esto ejecutará terraform en la máquina real
+                   }
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                script {
+                    dir('Terraform') {
+                    sh 'terraform plan'  // Ejecutar terraform plan
+                    }
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                script {
+                    sh 'docker exec terraform-container terraform apply -auto-approve'  // Aplicar cambios
+                }
+            }
+        }
+    }
+}

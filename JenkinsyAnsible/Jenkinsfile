@@ -1,33 +1,46 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Terraform Init') {
-            steps {
-                script {
-                    dir('Terraform') {
-                    sh 'terraform init'  // Esto ejecutará terraform en la máquina real
-                   }
-                }
-            }
-        }
+    environment {
+        TERRAFORM_PATH = '/usr/local/bin/terraform'  // Ruta de terraform en la máquina local
+    }
 
-        stage('Terraform Plan') {
+    stages {
+        stage('Run Terraform Init') {
             steps {
                 script {
+                    // Ejecuta terraform init en la máquina local
                     dir('Terraform') {
-                    sh 'terraform plan'  // Ejecutar terraform plan
+                    sh 'terraform init'  // El directorio de trabajo con los archivos .tf
                     }
                 }
             }
         }
-
-        stage('Terraform Apply') {
+        stage('Run Terraform Plan') {
             steps {
                 script {
-                    sh 'docker exec terraform-container terraform apply -auto-approve'  // Aplicar cambios
+                    // Ejecuta terraform plan en la máquina local
+                    dir('Terraform') {
+                    sh 'terraform plan'
+                    }
                 }
             }
+        }
+        stage('Run Terraform Apply') {
+            steps {
+                script {
+                    // Ejecuta terraform apply en la máquina local
+                    dir('Terraform') {
+                    sh 'terraform apply -auto-approve'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Aquí puedes agregar acciones de limpieza si es necesario
         }
     }
 }
