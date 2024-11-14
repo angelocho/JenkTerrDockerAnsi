@@ -2,36 +2,51 @@ pipeline {
     agent any
 
     environment {
-        TERRAFORM_PATH = '/usr/local/bin/terraform'  // Ruta de terraform en la máquina local
+        DOCKER_IMAGE = "angelocho/ubuntu-serversshjenkis"
+        TERRAFORM_DIR = "./Terraform"
+        ANSIBLE_PLAYBOOK_DIR = "./ansible"
     }
 
     stages {
-        stage('Run Terraform Init') {
+        stage('Prueba de Dockerfile') {
             steps {
                 script {
-                    // Ejecuta terraform init en la máquina local
-                    dir('Terraform') {
-                    sh 'terraform init'  // El directorio de trabajo con los archivos .tf
+                    // Construir y probar la imagen de Docker para asegurar que funcione
+                    echo 'Construyendo la imagen de Docker para pruebas...'
+                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                    
+                    // Ejecutar pruebas básicas en el contenedor Docker
+                    echo 'Ejecutando contenedor para pruebas...'
+                    sh 'docker run --rm ${DOCKER_IMAGE} echo "¡El contenedor está funcionando!"'
+                }
+            }
+        }
+
+        stage('Despliegue con Terraform') {
+            steps {
+                dir("${TERRAFORM_DIR}") {
+                    script {
+                        // Inicializar, planificar y aplicar la configuración de Terraform
+                        echo 'Inicializando Terraform...'
+                        sh 'terraform init'
+
+                        echo 'Planificando el despliegue de Terraform...'
+                        sh "terraform plan -var='docker_image_name=${DOCKER_IMAGE}' -out=tfplan"
+
+                        echo 'Aplicando el despliegue de Terraform...'
+                        sh "terraform apply -var='docker_image_name=${DOCKER_IMAGE}' -auto-approve tfplan"
                     }
                 }
             }
         }
-        stage('Run Terraform Plan') {
+
+        stage('Aprovisionamiento con Ansible') {
             steps {
-                script {
-                    // Ejecuta terraform plan en la máquina local
-                    dir('Terraform') {
-                    sh 'terraform plan'
-                    }
-                }
-            }
-        }
-        stage('Run Terraform Apply') {
-            steps {
-                script {
-                    // Ejecuta terraform apply en la máquina local
-                    dir('Terraform') {
-                    sh 'terraform apply -auto-approve'
+                dir("${ANSIBLE_PLAYBOOK_DIR}") {
+                    script {
+                        // Ejecutar el playbook de Ansible para aprovisionar recursos
+                        echo 'Ejecutando playbook de Ansible para aprovisionamiento...'
+                        sh 'ansible-playbook -i inventory playbook.yml'
                     }
                 }
             }
@@ -40,8 +55,14 @@ pipeline {
 
     post {
         always {
-            // Aquí puedes agregar acciones de limpieza si es necesario
-            sh 'echo hola mundo'
+            echo 'Limpiando recursos...'
+            deleteDir()  // Limpia el espacio de trabajo después de la construcción
+        }
+        success {
+            echo '¡Pipeline completado con éxito!'
+        }
+        failure {
+            echo 'El pipeline falló. Revisa los registros para más detalles.'
         }
     }
 }
