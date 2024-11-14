@@ -41,6 +41,7 @@ pipeline {
     post {
         always {
             // Aquí puedes agregar acciones de limpieza si es necesario
+            sh 'echo hola mundo'
         }
     }
 }
