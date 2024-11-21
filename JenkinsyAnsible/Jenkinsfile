@@ -21,7 +21,7 @@ pipeline {
                     // Ejecutar pruebas básicas en el contenedor Docker
                     echo 'Ejecutando contenedor para pruebas...'
                     sh 'docker run --rm ${DOCKER_IMAGE}${IMAGE_VERSION} echo "¡El contenedor está funcionando!"'
-                    sh 'docker ps --filter "name=ubuntu-ssh-python3.11.${NUMBEROFBUILD}" --format "{{.ID}}"'
+                    sh 'docker ps --filter "name=ubuntu-ssh-python3.11.*" --format "{{.ID}}"'
                 }
             }
         }
