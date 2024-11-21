@@ -14,7 +14,7 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home  # Persistencia de datos de Jenkins
       - /var/run/docker.sock:/var/run/docker.sock  # Permitir acceso a Docker desde Jenkins
-      - terraform_state:/terraform_state # Guardar el tfstate en un volumen persistente
+      - ./Terraform/terraform_state:/terraform_state # Guardar el tfstate en un volumen persistente
 
     privileged: true  # Permitir permisos de Docker completos
     networks:
