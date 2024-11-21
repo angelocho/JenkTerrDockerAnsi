@@ -35,7 +35,7 @@ RUN apt-get update && \
 
     # Instalación de Ansible
     apt-get install -y ansible && \
-
+    apt-get install -y sshpass && \
     # Agregar el usuario de Jenkins al grupo Docker para permitirle ejecutar Docker sin sudo
     usermod -aG docker jenkins
 
