@@ -56,7 +56,7 @@ pipeline {
                     script {
                         // Ejecutar el playbook de Ansible para aprovisionar recursos
                         echo 'Ejecutando playbook de Ansible para aprovisionamiento...'
-                        sh 'ansible -i inventory playbook.yml'
+                        sh 'ansible-playbook -i inventory playbook.yml'
                     }
                 }
             }
