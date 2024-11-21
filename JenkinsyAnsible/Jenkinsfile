@@ -41,7 +41,6 @@ pipeline {
                         sh """
                     terraform plan -var="docker_image_name=${DOCKER_IMAGE}" \
                                    -var="docker_image_version=${IMAGE_VERSION}" \
-                                   -var="docker_container_name=ubuntu-ssh-python3.11.${NUMBEROFBUILD}" \
                                    -out=tfplan \
                                    -state=${TF_STATE_DIR}/terraform.tfstate \
                                    -lock=false
