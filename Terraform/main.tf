@@ -24,5 +24,8 @@ resource "docker_container" "angelocho_container" {
       external = ports.value.external
     }
   }
+  lifecycle {
+    prevent_destroy = false
+  }
   restart = "always"
 }
