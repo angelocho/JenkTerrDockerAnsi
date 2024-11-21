@@ -28,7 +28,7 @@ resource "docker_container" "angelocho_container" {
     }
   }
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
   restart = "always"
 }
