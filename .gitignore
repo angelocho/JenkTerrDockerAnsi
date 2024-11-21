@@ -10,6 +10,9 @@
 !JenkinsyAnsible/docker-compose.yaml
 
 # Ignorar archivos de Terraform
+*.tfstate
+*.tfstate.*
+terraform.tfstate.d/
 Terraform/.terraform/*
 Terraform/.terraform/
 Terraform/terraform.tfstate.*

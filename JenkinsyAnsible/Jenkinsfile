@@ -7,6 +7,7 @@ pipeline {
         NUMBEROFBUILD = "${env.BUILD_NUMBER}"
         TERRAFORM_DIR = "./Terraform"
         ANSIBLE_PLAYBOOK_DIR = "./Ansible"
+        TF_STATE_DIR = "/terraform_state"
     }
 
     stages {
@@ -20,17 +21,18 @@ pipeline {
                     // Ejecutar pruebas básicas en el contenedor Docker
                     echo 'Ejecutando contenedor para pruebas...'
                     sh 'docker run --rm ${DOCKER_IMAGE}${IMAGE_VERSION} echo "¡El contenedor está funcionando!"'
+                    sh 'docker ps --filter "name=ubuntu-ssh-python3.11.${NUMBEROFBUILD}" --format "{{.ID}}"'
                 }
             }
         }
-
+        
         stage('Despliegue con Terraform') {
             steps {
                 dir("${TERRAFORM_DIR}") {
                     script {
                         // Inicializar, planificar y aplicar la configuración de Terraform
                         echo 'Inicializando Terraform...'
-                        sh 'terraform init'
+                        sh 'terraform init -backend-config="path=${TF_STATE_DIR}/terraform.tfstate"'
 
                         echo 'Formateando TF'
                         sh 'terraform fmt'
@@ -65,7 +67,7 @@ pipeline {
 
     post {
         always {
-            echo 'Limpiando recursos...'
+        echo 'Limpiando recursos...'
             deleteDir()  // Limpia el espacio de trabajo después de la construcción
         }
         success {
